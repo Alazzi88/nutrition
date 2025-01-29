@@ -106,7 +106,7 @@ export default function Welcome() {
 
         <div className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8 flex flex-col sm:flex-row justify-between items-center">
           <h1 className="text-4xl font-normal tracking-tight text-sky-500 md:text-5xl lg:text-6xl animate-slide-right mb-4 sm:mb-0 sm:mr-4">
-            تجمع جاازن الصحي
+            تجمع جازان الصحي
           </h1>
           <h1 className="text-4xl font-normal tracking-tight text-sky-500 md:text-5xl lg:text-2xl animate-slide-right">
             مسار التغذية العلاجية
