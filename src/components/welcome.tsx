@@ -91,26 +91,27 @@ export default function Welcome() {
   return (
     <div dir="rtl" className="bg-white">
       {/* Header */}
-      <div className="relative bg-white-800 pb-32">
-        <div className="absolute inset-0">
+      <div className="relative pb-32" style={{background: "linear-gradient(135deg, #0f172a 0%, #1e3a5f 60%, #0c4a6e 100%)"}}>
+        <div className="absolute inset-0 overflow-hidden">
           <img
             alt="logo"
             src="/img/logo.webp"
-            className="size-full object-contain"
+            className="size-full object-contain opacity-5"
           />
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 bg-gray-800 mix-blend-multiply"
-          />
+          <div className="absolute top-0 right-0 w-96 h-96 bg-sky-500 opacity-10 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-indigo-600 opacity-10 rounded-full blur-3xl" />
         </div>
 
-        <div className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8 flex flex-col sm:flex-row justify-between items-center">
-          <h1 className="text-4xl font-normal tracking-tight text-sky-500 md:text-5xl lg:text-6xl animate-slide-right mb-4 sm:mb-0 sm:mr-4">
-            تجمع جازان الصحي
+        <div className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8 flex flex-col items-center text-center gap-6">
+          <h1 className="text-4xl font-extrabold tracking-tight text-white md:text-5xl lg:text-6xl animate-slide-up drop-shadow-2xl">
+            تجمع{" "}
+            <span className="shimmer-text">جازان</span>
+            {" "}الصحي
           </h1>
-          <h1 className="text-4xl font-normal tracking-tight text-sky-500 md:text-5xl lg:text-2xl animate-slide-right">
+          <div className="w-24 h-1 rounded-full bg-gradient-to-r from-sky-400 to-indigo-500 animate-fade-in" />
+          <h2 className="text-xl sm:text-2xl font-semibold text-sky-200 animate-slide-up" style={{animationDelay: "0.2s"}}>
             مسار التغذية العلاجية
-          </h1>
+          </h2>
         </div>
       </div>
 
@@ -144,33 +145,34 @@ export default function Welcome() {
           {supportLinks.map((link, index) => (
             <SwiperSlide key={link.name}>
               <div
-                className="flex flex-col rounded-3xl mb-12 overflow-hidden shadow-xl transition transform hover:shadow-2xl hover:-translate-y-2 animate-slide-left bg-white"
+                className="flex flex-col rounded-3xl mb-12 overflow-hidden shadow-xl transition-all duration-500 hover:shadow-2xl hover:-translate-y-3 animate-slide-left bg-white group border border-gray-100"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 {/* الصورة أعلى البطاقة */}
-                <div className="relative">
+                <div className="relative overflow-hidden bg-gradient-to-br from-sky-50 to-indigo-50">
                   <img
                     src={link.image}
                     alt={link.name}
-                    className="w-full h-40 object-contain"
+                    className="w-full h-40 object-contain transition-transform duration-500 group-hover:scale-110"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
 
                 {/* المحتوى النصي */}
-                <div className="p-4 flex flex-col items-center justify-center text-center">
-                  <h3 className="text-xl font-semibold text-sky-500">
+                <div className="p-4 flex flex-col items-center justify-center text-center flex-1">
+                  <h3 className="text-lg font-bold text-gray-800 group-hover:text-sky-600 transition-colors duration-300">
                     {link.name}
                   </h3>
-                  <p className="mt-2 text-sm text-gray-600 leading-relaxed">
+                  <p className="mt-2 text-xs text-gray-500 leading-relaxed">
                     {link.description}
                   </p>
                 </div>
 
                 {/* الزر في الأسفل */}
-                <div className="bg-gray-50 px-4 py-3 text-center">
+                <div className="px-4 py-3 text-center bg-gradient-to-r from-gray-50 to-sky-50">
                   <a
                     href={link.href}
-                    className="inline-block px-5 py-2 text-sm font-medium text-white  bg-sky-500  hover:bg-sky-600 rounded-3xl focus:outline-none focus:ring-2 focus:ring-sky-500"
+                    className="inline-block px-6 py-2 text-sm font-semibold text-white bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-600 hover:to-indigo-700 rounded-2xl shadow-md hover:shadow-sky-300 transition-all duration-300 hover:-translate-y-0.5"
                   >
                     للإطلاع
                   </a>

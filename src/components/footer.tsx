@@ -1,198 +1,179 @@
 'use client';
 
-
-'use client';
-
 import Image from "next/image";
-import Link from "next/link";
 import React, { useState } from "react";
-
-interface LinkItem {
-  name: string;
-  href: string;
-  logo?: string; // جعل اللوجو اختياريًا لإضافة روابط بدون لوجو مثل سياسة الخصوصية
-}
-
-const relatedLinks: LinkItem[] = [
-  {
-    name: "وزارة الصحة",
-    href: "https://www.moh.gov.sa/",
-    logo: "/img/min.webp", // تأكد من وضع اللوجو في المسار الصحيح داخل مجلد public
-  },
-  // يمكنك إضافة روابط أخرى هنا
-];
 
 const Footer: React.FC = () => {
   const [isPrivacyOpen, setPrivacyOpen] = useState(false);
 
-  const openPrivacy = () => setPrivacyOpen(true);
-  const closePrivacy = () => setPrivacyOpen(false);
+  const quickLinks = [
+    { label: "التغذية العلاجية", href: "/man" },
+    { label: "تغذية المرأة", href: "/women" },
+    { label: "تغذية الطفل", href: "/child" },
+    { label: "تغذية السكري", href: "/diabetic" },
+    { label: "تغذية الرياضيين", href: "/athletes" },
+    { label: "تغذية الأورام", href: "/cancer" },
+  ];
 
   return (
-    <footer dir="rtl" className="bg-gray-800 text-white">
-      <div className="mx-auto max-w-7xl px-6 py-12 lg:py-16 lg:px-8">
-        {/* قسم الروابط ذات الصلة */}
-        <div className="flex flex-col items-center">
-          <h3 className="font-semibold text-lg mb-6">روابط تهمك ذات صلة</h3>
-          <div className="flex flex-wrap justify-center gap-8">
-            {relatedLinks.map((link) =>
-              link.href.startsWith("http") ? (
-                // روابط خارجية تستخدم <a>
-                <a
-                  key={link.name}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex flex-col items-center text-center"
-                >
-                  {link.logo && (
-                    <Image
-                      src={link.logo}
-                      alt={link.name}
-                      width={64}
-                      height={64}
-                      className="mb-2 rounded-full"
-                    />
-                  )}
-                  <span className="text-sm">{link.name}</span>
-                </a>
-              ) : (
-                // روابط داخلية تستخدم <Link> بدون <a>
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className="flex flex-col items-center text-center"
-                >
-                  {link.logo && (
-                    <Image
-                      src={link.logo}
-                      alt={link.name}
-                      width={64}
-                      height={64}
-                      className="mb-2 rounded-full"
-                    />
-                  )}
-                  <span className="text-sm">{link.name}</span>
-                </Link>
-              )
-            )}
+    <footer dir="rtl" className="relative overflow-hidden" style={{ background: "linear-gradient(135deg, #0f172a 0%, #1e3a5f 60%, #0f172a 100%)" }}>
+      {/* موجة علوية */}
+      <div className="absolute top-0 left-0 right-0">
+        <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
+          <path d="M0,30 C360,60 1080,0 1440,30 L1440,0 L0,0 Z" fill="#f8fafc" />
+        </svg>
+      </div>
+
+      {/* تأثيرات ضوئية خلفية */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-sky-500 opacity-5 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-0 w-64 h-64 bg-indigo-500 opacity-5 rounded-full blur-3xl" />
+      </div>
+
+      <div className="relative mx-auto max-w-7xl px-6 pt-20 pb-10 lg:px-8">
+        {/* الصف العلوي: الشعار + روابط سريعة + وزارة الصحة */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pb-12 border-b border-white/10">
+          {/* الشعار والوصف */}
+          <div className="flex flex-col items-center md:items-start gap-4">
+            <div className="relative">
+              <div className="absolute -inset-2 bg-sky-500 opacity-20 rounded-full blur-xl" />
+              <Image
+                src="/img/logo.webp"
+                alt="تجمع جازان الصحي"
+                width={80}
+                height={80}
+                className="relative rounded-full"
+              />
+            </div>
+            <div>
+              <h3 className="text-white font-bold text-lg">تجمع جازان الصحي</h3>
+              <p className="text-gray-400 text-sm mt-1 leading-relaxed">
+                مسار التغذية العلاجية — نحو حياة صحية مستدامة
+              </p>
+            </div>
+            <div className="flex gap-3 mt-2">
+              {["🏥", "🥗", "💊"].map((icon, i) => (
+                <div key={i} className="w-9 h-9 rounded-xl flex items-center justify-center text-lg bg-white/5 hover:bg-sky-500/20 transition-colors duration-300 cursor-pointer border border-white/10">
+                  {icon}
+                </div>
+              ))}
+            </div>
           </div>
-          <p className="text-xs text-gray-200 mt-5">
-            نحن نحترم خصوصيتك. البيانات التي نقوم بجمعها لا تُستخدم لأغراض التسويق أو أي أغراض أخرى. لمزيد من التفاصيل، يرجى مراجعة{" "}
-            <button
-              onClick={openPrivacy}
-              className="underline hover:text-gray-300 transition focus:outline-none"
+
+          {/* روابط سريعة */}
+          <div>
+            <h4 className="text-white font-semibold text-base mb-5 flex items-center gap-2">
+              <span className="w-1 h-5 rounded-full bg-sky-400 inline-block" />
+              روابط سريعة
+            </h4>
+            <ul className="space-y-2.5">
+              {quickLinks.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className="text-gray-400 hover:text-sky-400 text-sm transition-colors duration-200 flex items-center gap-2 group"
+                  >
+                    <span className="w-4 h-px bg-gray-600 group-hover:bg-sky-400 group-hover:w-6 transition-all duration-300" />
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* روابط ذات صلة */}
+          <div>
+            <h4 className="text-white font-semibold text-base mb-5 flex items-center gap-2">
+              <span className="w-1 h-5 rounded-full bg-indigo-400 inline-block" />
+              روابط تهمك
+            </h4>
+            <a
+              href="https://www.moh.gov.sa/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-sky-400/30 transition-all duration-300 group"
             >
-              سياسة الخصوصية
-            </button>
-            .
-          </p>
+              <Image
+                src="/img/min.webp"
+                alt="وزارة الصحة"
+                width={48}
+                height={48}
+                className="rounded-full group-hover:scale-110 transition-transform duration-300"
+              />
+              <div>
+                <p className="text-white text-sm font-semibold">وزارة الصحة</p>
+                <p className="text-gray-500 text-xs mt-0.5">moh.gov.sa</p>
+              </div>
+              <span className="mr-auto text-gray-500 group-hover:text-sky-400 transition-colors">←</span>
+            </a>
+
+            {/* سياسة الخصوصية */}
+            <div className="mt-4 p-4 rounded-2xl bg-white/5 border border-white/10">
+              <p className="text-xs text-gray-400 leading-relaxed">
+                نحن نحترم خصوصيتك. بياناتك لا تُستخدم لأغراض التسويق.{" "}
+                <button
+                  onClick={() => setPrivacyOpen(true)}
+                  className="text-sky-400 underline hover:text-sky-300 transition-colors focus:outline-none"
+                >
+                  سياسة الخصوصية
+                </button>
+              </p>
+            </div>
+          </div>
         </div>
-        {/* القسم السفلي للفوتر */}
-        <div className="mt-12 border-t border-white/20 pt-12 text-center space-y-4 ">
-          <p className="text-sm">
-            This website Developed by Yahya Alizzi
-          
+
+        {/* الشريط السفلي */}
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-gray-500 text-xs">
+            جميع الحقوق محفوظة &copy; {new Date().getFullYear()} — تجمع جازان الصحي
+          </p>
+          <p className="text-gray-600 text-xs">
+            Developed by{" "}
+            <span className="text-sky-400 font-medium">Yahya Alizzi</span>
           </p>
         </div>
       </div>
 
-      {/* نافذة سياسة الخصوصية المنبثقة */}
+      {/* نافذة سياسة الخصوصية */}
       {isPrivacyOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white rounded-lg w-11/12 md:w-3/4 lg:w-1/2 p-6 relative">
-            <button
-              onClick={closePrivacy}
-              className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 focus:outline-none"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+          <div className="bg-white rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden">
+            {/* هيدر النافذة */}
+            <div className="p-6 flex items-center justify-between" style={{ background: "linear-gradient(135deg, #0f172a, #1e3a5f)" }}>
+              <div>
+                <h2 className="text-xl font-bold text-white">سياسة الخصوصية</h2>
+                <p className="text-sky-300 text-sm mt-1">تجمع جازان الصحي</p>
+              </div>
+              <button
+                onClick={() => setPrivacyOpen(false)}
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-            <h2 className="text-xl font-semibold mb-4">سياسة الخصوصية</h2>
-            <div className="overflow-y-auto max-h-80">
-              {/* محتوى سياسة الخصوصية */}
-              <section className="mb-4">
-                <h3 className="font-semibold text-lg mb-2">مقدمة</h3>
-                <p className="text-sm text-gray-700">
-                  نحن في [اسم شركتك] نلتزم بحماية خصوصيتك واحترام بياناتك الشخصية. توضح سياسة الخصوصية هذه كيفية جمع واستخدام وحماية معلوماتك عند زيارتك لموقعنا الإلكتروني.
-                </p>
-              </section>
-
-              <section className="mb-4">
-                <h3 className="font-semibold text-lg mb-2">جمع المعلومات</h3>
-                <p className="text-sm text-gray-700">
-                  نقوم بجمع المعلومات التالية منك طواعية عند استخدامك لموقعنا:
-                </p>
-                <ul className="list-disc list-inside text-sm text-gray-700">
-                  <li>رقم الهوية</li>
-                  <li>الاسم الكامل</li>
-                  <li>رقم الجوال</li>
-                  <li>تاريخ الميلاد</li>
-                </ul>
-                <p className="text-sm text-gray-700 mt-2">
-                  بالإضافة إلى ذلك، نقوم بجمع معلومات غير شخصية مثل عنوان الـ IP، نوع المتصفح، والصفحات التي تزورها على موقعنا.
-                </p>
-              </section>
-
-              <section className="mb-4">
-                <h3 className="font-semibold text-lg mb-2">استخدام المعلومات</h3>
-                <p className="text-sm text-gray-700">
-                  نستخدم المعلومات التي نجمعها لتحسين تجربتك على موقعنا، لتزويدك بالمحتوى والخدمات التي تلبي احتياجاتك، وللرد على استفساراتك وملاحظاتك. البيانات التي نقوم بجمعها مثل رقم الهوية، الاسم، رقم الجوال، وتاريخ الميلاد تُستخدم للأغراض التالية:
-                </p>
-                <ul className="list-disc list-inside text-sm text-gray-700">
-                  <li>التحقق من الهوية لتقديم خدمات مخصصة.</li>
-                  <li>التواصل معك بخصوص استفساراتك وطلباتك.</li>
-                  <li>تحليل الاستخدام لتحسين الموقع والخدمات المقدمة.</li>
-                </ul>
-                <p className="text-sm text-gray-700 mt-2">
-                  لا نشارك معلوماتك الشخصية مع أطراف ثالثة لأغراض التسويق دون موافقتك المسبقة. يمكننا مشاركة بيانات غير شخصية مع شركائنا لأغراض تحليلية فقط.
-                </p>
-              </section>
-
-              <section className="mb-4">
-                <h3 className="font-semibold text-lg mb-2">حماية المعلومات</h3>
-                <p className="text-sm text-gray-700">
-                  نتخذ إجراءات أمنية مناسبة لحماية معلوماتك الشخصية من الوصول غير المصرح به، التعديل، أو الكشف. ومع ذلك، لا يمكننا ضمان الأمان المطلق للبيانات المرسلة عبر الإنترنت.
-                </p>
-              </section>
-
-              <section className="mb-4">
-                <h3 className="font-semibold text-lg mb-2">ملفات تعريف الارتباط (Cookies)</h3>
-                <p className="text-sm text-gray-700">
-                  يستخدم موقعنا ملفات تعريف الارتباط لتحسين تجربة المستخدم وتحليل استخدام الموقع. يمكنك التحكم في إعدادات ملفات تعريف الارتباط من خلال إعدادات المتصفح الخاص بك.
-                </p>
-              </section>
-
-              <section className="mb-4">
-                <h3 className="font-semibold text-lg mb-2">روابط لمواقع أخرى</h3>
-                <p className="text-sm text-gray-700">
-                  قد يحتوي موقعنا على روابط لمواقع إلكترونية أخرى. نحن غير مسؤولين عن محتوى أو ممارسات الخصوصية لتلك المواقع. نوصي بقراءة سياسات الخصوصية الخاصة بكل موقع تزوره.
-                </p>
-              </section>
-
-              <section className="mb-4">
-                <h3 className="font-semibold text-lg mb-2">تغييرات على سياسة الخصوصية</h3>
-                <p className="text-sm text-gray-700">
-                  قد نقوم بتحديث سياسة الخصوصية هذه من وقت لآخر لتعكس التغييرات في ممارساتنا أو متطلبات قانونية جديدة. سيتم نشر أي تغييرات على هذه الصفحة، وسنقوم بإعلامك بأي تغييرات مادية عبر البريد الإلكتروني أو من خلال إشعار على موقعنا.
-                </p>
-              </section>
-
-              <section className="mb-4">
-                <h3 className="font-semibold text-lg mb-2">اتصل بنا</h3>
-                <p className="text-sm text-gray-700">
-                  إذا كانت لديك أي أسئلة أو استفسارات حول سياسة الخصوصية هذه، يرجى الاتصال بنا على البريد الإلكتروني{" "}
-                  <a href="mailto:3zzoezzo@gmail.com" className="underline text-blue-600 hover:text-blue-800">
-                    3zzoezzo@gmail.com
-                  </a>{" "}
-                </p>
-              </section>
+                ✕
+              </button>
+            </div>
+            {/* محتوى سياسة الخصوصية */}
+            <div className="p-6 overflow-y-auto max-h-[65vh] space-y-5 text-right" dir="rtl">
+              {[
+                { title: "مقدمة", text: "نحن في تجمع جازان الصحي نلتزم بحماية خصوصيتك واحترام بياناتك الشخصية. توضح هذه السياسة كيفية جمع واستخدام وحماية معلوماتك." },
+                { title: "جمع المعلومات", text: "نقوم بجمع: رقم الهوية، الاسم الكامل، رقم الجوال، تاريخ الميلاد — لأغراض تقديم خدمات التغذية العلاجية فقط." },
+                { title: "استخدام المعلومات", text: "تُستخدم بياناتك للتحقق من الهوية وتقديم خدمات مخصصة والتواصل بشأن الاستشارات. لا نشاركها مع أطراف ثالثة لأغراض تسويقية." },
+                { title: "حماية المعلومات", text: "نتخذ إجراءات أمنية مناسبة لحماية معلوماتك من الوصول غير المصرح به أو التعديل أو الكشف." },
+                { title: "اتصل بنا", text: "للاستفسار عن سياسة الخصوصية: 3zzoezzo@gmail.com" },
+              ].map((sec, i) => (
+                <div key={i} className="border-r-4 border-sky-400 pr-4">
+                  <h3 className="font-bold text-gray-800 mb-1">{sec.title}</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">{sec.text}</p>
+                </div>
+              ))}
+            </div>
+            <div className="p-4 border-t border-gray-100 flex justify-center">
+              <button
+                onClick={() => setPrivacyOpen(false)}
+                className="px-8 py-2.5 rounded-xl text-white text-sm font-semibold transition-all duration-300"
+                style={{ background: "linear-gradient(135deg, #0ea5e9, #6366f1)" }}
+              >
+                إغلاق
+              </button>
             </div>
           </div>
         </div>
